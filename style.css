@@ -59,9 +59,9 @@ h2{font-size:clamp(50px,4.9vw,82px)}
 .section-label{padding-top:17px;font-size:9px;letter-spacing:.13em}
 .kicker{font-size:9px;letter-spacing:.14em}
 
-.hero{min-height:0;grid-template-columns:minmax(0,.91fr) minmax(500px,1.09fr);gap:clamp(44px,6vw,116px);align-items:end;padding:clamp(72px,7.3vw,132px) 5.2% clamp(86px,8vw,146px)}
+.hero{min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(52px,5vw,92px);align-items:end;padding:clamp(72px,7.3vw,132px) 5.2% clamp(86px,8vw,146px)}
 .hero-copy{max-width:548px;padding-bottom:18px;position:relative;z-index:2}
-.hero h1{max-width:620px;margin:27px 0 28px;position:relative}
+.hero h1{max-width:570px;margin:27px 0 28px;position:relative;font-size:clamp(66px,5.6vw,100px)}
 .hero-lead{max-width:430px;font-size:16px;line-height:1.78}
 .hero-actions{margin-top:36px}
 .button{min-height:56px;padding:0 23px;border:1px solid transparent;font-size:10px;letter-spacing:.02em}
