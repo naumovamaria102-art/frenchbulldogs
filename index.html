@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf5f0">
   <meta name="description" content="Французские бульдоги питомника «Безобразно прекрасные».">
   <title>Французские бульдоги «Безобразно прекрасные»: Александра</title>
-  <link rel="stylesheet" href="style.css?v=20261104-04">
+  <link rel="stylesheet" href="style.css?v=20261104-05">
 </head>
 <body>
   <header class="header">
@@ -20,7 +20,7 @@
 <a href="#puppies">Щенки</a>
 <a href="#story">Обо мне</a>
 <a href="#map">Выпускники</a>
-<a href="#reviews">Отзывы</a>
+<a href="#reviews">Семьи</a>
 </nav>
     <a class="header-cta" href="#puppies">Узнать о щенках</a>
   </header>
@@ -140,7 +140,7 @@
     <section id="map" class="graduates-section">
 <div class="graduates-heading">
 <h2>Выпускники<br>на карте России.</h2>
-<p>Нажмите на станцию. Откроется фотография и кличка собаки, которая уже живёт в семье.</p>
+<p>Нажмите на станцию. Откроются фотографии и клички собак, которые уже живут в семьях.</p>
 </div>
 <div class="map-console">
 <div class="graduate-map" aria-label="Интерактивная карта выпускников по России">
@@ -181,9 +181,10 @@
 </g>
 </g>
 </g>
-<text x="1018" y="588" class="atlas-coordinate">1 / 26</text>
 </svg>
 <div id="map-points" class="map-points">
+</div>
+<div id="map-clusters" class="map-clusters" aria-label="Станции выпускников">
 </div>
 <div class="city-tag city-moscow">Москва</div>
 <div class="city-tag city-yekat">Екатеринбург</div>
@@ -216,23 +217,34 @@
 <div class="modal-layout">
 <img id="graduate-modal-image" src="assets/graduates/amelishka.jpg" alt="Амелишка, выпускница питомника">
 <div>
-<span id="graduate-modal-location">Город уточняется</span>
+<span id="graduate-modal-location" hidden></span>
 <h3 id="graduate-modal-name">Амелишка</h3>
 <p>Этот выпускник уже живёт в своей семье.</p>
+<div id="graduate-modal-gallery" class="graduate-modal-gallery" hidden aria-label="Другие выпускники на этой станции"></div>
 <a href="https://t.me/Alekx_21" target="_blank" rel="noopener" class="modal-cta">Узнать о щенках</a>
 </div>
 </div>
 </dialog>
 
+    <dialog id="graduate-picker" class="graduate-picker" aria-labelledby="graduate-picker-title">
+<form method="dialog">
+<button class="picker-close" type="submit" aria-label="Закрыть">×</button>
+</form>
+<p class="picker-kicker">Выпускники питомника</p>
+<h3 id="graduate-picker-title">Станция выпускников</h3>
+<p id="graduate-picker-copy">Выберите фотографию, чтобы познакомиться.</p>
+<div id="graduate-rail" class="graduate-rail" role="list"></div>
+</dialog>
+
     <section id="reviews" class="reviews-section section">
 <div class="reviews-grid">
 <div>
-<h2>Отзывы семей.</h2>
-<p>Фотографии и отзывы владельцев я добавляю сюда только с их разрешения. Пока можно открыть карту выпускников и познакомиться с собаками, которые уже дома.</p>
+<h2>Истории семей.</h2>
+<p>На карте собраны выпускники, которые уже живут в семьях по всей России. Откройте станцию и познакомьтесь с ними по фото.</p>
 <a class="under-link" href="#map">Открыть карту выпускников</a>
 </div>
 <aside class="review-note">
-<p>Новые истории появятся здесь с фотографией собаки и городом.</p>
+<p>Отзывы владельцев появятся здесь только с их разрешения.</p>
 </aside>
 </div>
 </section>
