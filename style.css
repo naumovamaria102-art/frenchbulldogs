@@ -260,7 +260,7 @@ a:hover { color: var(--color-accent); text-decoration-color: var(--color-accent)
   .graduate-map::after { inset: var(--space-sm); }
   /* Keep the two end stations inside the phone viewport: the map can still
      breathe beyond its frame, but every tappable stop must remain reachable. */
-  .map-coordinate-plane { left: -9%; width: 118%; }
+  .map-coordinate-plane { left: -5%; width: 110%; }
   .map-points { display: none; }
   .map-clusters { display: block; z-index: var(--z-raised); }
   .map-cluster { position: absolute; left: var(--x); top: var(--y); display: grid; width: 48px; height: 48px; padding: 0; place-items: center; border: 0; background: transparent; cursor: pointer; transform: translate(-50%, -50%); }
