@@ -6,7 +6,7 @@ const modalName = document.getElementById('graduate-modal-name');
 const modalLocation = document.getElementById('graduate-modal-location');
 const progress = document.getElementById('map-discovered');
 const seen = new Set();
-const locationText = dog => dog.city ? dog.city.toUpperCase() : 'ГОРОД УТОЧНЯЕМ';
+const locationText = dog => dog.city || 'Город уточняется';
 const imageAlt = dog => `${dog.name}, выпускник питомника`;
 function updateProgress() { progress.textContent = seen.size; }
 function openGraduate(id) {
