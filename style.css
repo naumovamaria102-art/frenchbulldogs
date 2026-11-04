@@ -146,6 +146,7 @@ footer{padding:40px 6%;background:#edf2ee;color:#526b6b}
 @font-face{font-family:"Prata";src:url("assets/fonts/Prata-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 .brand{font-family:"Prata",Georgia,serif;font-weight:400;font-size:12px;letter-spacing:-.06em;line-height:.84}
 .brand span{display:block}
+.header .brand,footer .brand{font-family:"Fixel Text",Arial,sans-serif;font-weight:700;letter-spacing:-.065em;line-height:.87}
 .hero h1{font-family:"Fixel Text",Arial,sans-serif;font-weight:700;letter-spacing:-.09em;line-height:.86}
 .hero h1 em{font-family:"Prata",Georgia,serif;font-weight:400;letter-spacing:-.065em;line-height:.76}
 
