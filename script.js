@@ -91,7 +91,6 @@ function renderModalGallery(cluster, selectedId) {
     button.setAttribute('aria-label', `Открыть фотографию: ${dog.name}`);
     image.src = dog.image;
     image.alt = '';
-    image.loading = 'lazy';
     button.append(image);
     button.addEventListener('click', () => openGraduate(id));
     modalGallery.append(button);
@@ -148,11 +147,9 @@ function openPicker(clusterId) {
 
     choice.type = 'button';
     choice.className = 'graduate-choice';
-    choice.setAttribute('role', 'listitem');
     choice.setAttribute('aria-label', `Открыть историю: ${dog.name}`);
     image.src = dog.image;
     image.alt = '';
-    image.loading = 'lazy';
     caption.textContent = dog.name;
     location.textContent = dog.city || 'Выпускник питомника';
     choice.append(image, caption, location);
