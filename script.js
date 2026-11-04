@@ -50,6 +50,9 @@ const graduateRail = document.getElementById('graduate-rail');
 const progress = document.getElementById('map-discovered');
 const mapSection = document.getElementById('map');
 const mobileCta = document.querySelector('.mobile-cta');
+const mapArtwork = document.querySelector('.map-art');
+const mapSurface = document.querySelector('.graduate-map');
+const mapMotionToggle = document.querySelector('.map-motion-toggle');
 const graduatesById = new Map(graduates.map(dog => [dog.id, dog]));
 const clustersById = new Map(mobileClusters.map(cluster => [cluster.id, cluster]));
 const stationByGraduate = new Map();
@@ -65,7 +68,7 @@ const imageAlt = dog => `${dog.name}, выпускник питомника`;
 const plural = count => `${count} ${count === 1 ? 'выпускник' : count < 5 ? 'выпускника' : 'выпускников'}`;
 
 function updateProgress() {
-  progress.textContent = seen.size;
+  if (progress) progress.textContent = seen.size;
 }
 
 function setLocation(dog) {
@@ -118,6 +121,12 @@ function openGraduate(id) {
 
 function createDesktopPoint(dog, index) {
   const point = document.createElement('button');
+  const marker = document.createElement('span');
+  const ticket = document.createElement('span');
+  const image = document.createElement('img');
+  const name = document.createElement('b');
+  const location = document.createElement('small');
+
   point.type = 'button';
   point.className = 'graduate-point';
   point.dataset.graduate = dog.id;
@@ -125,7 +134,14 @@ function createDesktopPoint(dog, index) {
   point.style.setProperty('--y', `${dog.y}%`);
   point.style.setProperty('--delay', `${(index % 6) * 0.42}s`);
   point.setAttribute('aria-label', `Открыть фотографию: ${dog.name}${dog.city ? `, ${dog.city}` : ''}`);
-  point.innerHTML = '<span></span>';
+  marker.className = 'station-dot';
+  ticket.className = 'station-ticket';
+  image.src = dog.image;
+  image.alt = '';
+  name.textContent = dog.name;
+  location.textContent = dog.city || 'Выпускник питомника';
+  ticket.append(image, name, location);
+  point.append(marker, ticket);
   point.addEventListener('click', () => openGraduate(dog.id));
   points.append(point);
 }
@@ -199,6 +215,57 @@ if (mapSection && mobileCta && 'IntersectionObserver' in window) {
     mobileCta.classList.toggle('is-hidden', entries[0].isIntersecting);
   }, { threshold: 0.12 });
   mapObserver.observe(mapSection);
+}
+
+if (mapArtwork && mapSurface && mapMotionToggle && typeof mapArtwork.pauseAnimations === 'function') {
+  const motionState = {
+    held: false,
+    visible: false,
+    pointer: false,
+    focus: false,
+    reduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  };
+
+  const syncMapMotion = () => {
+    const paused = motionState.held || !motionState.visible || motionState.pointer || motionState.focus || motionState.reduced;
+    if (paused) mapArtwork.pauseAnimations();
+    else mapArtwork.unpauseAnimations();
+    mapMotionToggle.setAttribute('aria-pressed', String(motionState.held));
+    mapMotionToggle.textContent = motionState.held ? 'Запустить поезд' : 'Остановить поезд';
+  };
+
+  mapMotionToggle.addEventListener('click', () => {
+    motionState.held = !motionState.held;
+    syncMapMotion();
+  });
+
+  mapSurface.addEventListener('pointerenter', () => {
+    motionState.pointer = true;
+    syncMapMotion();
+  });
+  mapSurface.addEventListener('pointerleave', () => {
+    motionState.pointer = false;
+    syncMapMotion();
+  });
+  mapSurface.addEventListener('focusin', () => {
+    motionState.focus = true;
+    syncMapMotion();
+  });
+  mapSurface.addEventListener('focusout', () => {
+    motionState.focus = false;
+    syncMapMotion();
+  });
+
+  if ('IntersectionObserver' in window) {
+    const motionObserver = new IntersectionObserver(entries => {
+      motionState.visible = entries[0].isIntersecting;
+      syncMapMotion();
+    }, { threshold: 0.14 });
+    motionObserver.observe(mapSurface);
+  } else {
+    motionState.visible = true;
+    syncMapMotion();
+  }
 }
 
 updateProgress();
