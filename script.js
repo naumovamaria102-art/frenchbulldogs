@@ -53,6 +53,12 @@ const mobileCta = document.querySelector('.mobile-cta');
 const mapArtwork = document.querySelector('.map-art');
 const mapSurface = document.querySelector('.graduate-map');
 const mapMotionToggle = document.querySelector('.map-motion-toggle');
+const contactSheet = document.getElementById('contact-sheet');
+const contactSheetTriggers = document.querySelectorAll('[data-contact-sheet]');
+const journeyImage = document.getElementById('journey-image');
+const journeyCaption = document.getElementById('journey-caption');
+const journeySteps = document.querySelectorAll('.journey-step');
+let journeySwapTimer;
 const graduatesById = new Map(graduates.map(dog => [dog.id, dog]));
 const clustersById = new Map(mobileClusters.map(cluster => [cluster.id, cluster]));
 const stationByGraduate = new Map();
@@ -66,6 +72,32 @@ if (stationByGraduate.size !== graduates.length || [...stationByGraduate.keys()]
 
 const imageAlt = dog => `${dog.name}, выпускник питомника`;
 const plural = count => `${count} ${count === 1 ? 'выпускник' : count < 5 ? 'выпускника' : 'выпускников'}`;
+
+function openContactSheet() {
+  if (contactSheet && !contactSheet.open) contactSheet.showModal();
+}
+
+function setJourneyStep(step) {
+  journeySteps.forEach(item => item.setAttribute('aria-pressed', String(item === step)));
+
+  if (!journeyImage || !journeyCaption) return;
+
+  const applyStep = () => {
+    journeyImage.src = step.dataset.image || journeyImage.src;
+    journeyImage.alt = step.dataset.alt || journeyImage.alt;
+    journeyCaption.textContent = step.dataset.caption || journeyCaption.textContent;
+    journeyImage.classList.remove('is-swapping');
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    applyStep();
+    return;
+  }
+
+  journeyImage.classList.add('is-swapping');
+  window.clearTimeout(journeySwapTimer);
+  journeySwapTimer = window.setTimeout(applyStep, 90);
+}
 
 function updateProgress() {
   if (progress) progress.textContent = seen.size;
@@ -199,6 +231,20 @@ function createMobileCluster(cluster) {
 graduates.forEach(createDesktopPoint);
 mobileClusters.forEach(createMobileCluster);
 
+contactSheetTriggers.forEach(trigger => {
+  trigger.addEventListener('click', openContactSheet);
+});
+
+if (contactSheet) {
+  contactSheet.addEventListener('click', event => {
+    if (event.target === contactSheet) contactSheet.close();
+  });
+}
+
+journeySteps.forEach(step => {
+  step.addEventListener('click', () => setJourneyStep(step));
+});
+
 document.getElementById('close-graduate-modal').addEventListener('click', () => modal.close());
 modal.addEventListener('click', event => {
   if (event.target === modal) modal.close();
@@ -266,6 +312,24 @@ if (mapArtwork && mapSurface && mapMotionToggle && typeof mapArtwork.pauseAnimat
     motionState.visible = true;
     syncMapMotion();
   }
+}
+
+if (mapSurface && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const resetMapParallax = () => {
+    mapSurface.style.setProperty('--map-shift-x', '0px');
+    mapSurface.style.setProperty('--map-shift-y', '0px');
+  };
+
+  mapSurface.classList.add('is-parallax');
+  mapSurface.addEventListener('pointermove', event => {
+    const bounds = mapSurface.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    mapSurface.style.setProperty('--map-shift-x', `${(x * 10).toFixed(2)}px`);
+    mapSurface.style.setProperty('--map-shift-y', `${(y * 7).toFixed(2)}px`);
+  });
+  mapSurface.addEventListener('pointerleave', resetMapParallax);
+  mapSurface.addEventListener('pointercancel', resetMapParallax);
 }
 
 updateProgress();
