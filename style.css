@@ -204,7 +204,7 @@ a:hover { color: var(--color-accent); }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   grid-template-rows: minmax(0, 1fr) auto;
   min-height: calc(100svh - 76px);
   column-gap: clamp(32px, 5vw, 104px);
@@ -216,10 +216,12 @@ a:hover { color: var(--color-accent); }
   align-self: end;
   max-width: 7.7ch;
   padding-bottom: var(--space-2xl);
-  font-size: clamp(3.75rem, 6.3vw, 7.2rem);
+  font-size: clamp(3.5rem, 5.35vw, 6.25rem);
   letter-spacing: -0.07em;
   line-height: 0.84;
 }
+
+.hero h1 span { display: block; white-space: nowrap; }
 
 .hero-image {
   position: relative;
@@ -892,7 +894,7 @@ a:hover { color: var(--color-accent); }
   .header-cta-full { display: none; }
   .header-cta-short { display: inline; }
   .hero { row-gap: var(--space-lg); padding-top: var(--space-xl); padding-bottom: var(--space-2xl); }
-  .hero h1 { max-width: 7.1ch; font-size: clamp(3.7rem, 16vw, 5.1rem); line-height: 0.86; }
+  .hero h1 { max-width: none; font-size: clamp(3.05rem, 13vw, 4.15rem); line-height: 0.86; }
   .hero-image { min-height: 370px; }
   .hero-image figcaption { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
   .hero-lead { font-size: 1.125rem; }
